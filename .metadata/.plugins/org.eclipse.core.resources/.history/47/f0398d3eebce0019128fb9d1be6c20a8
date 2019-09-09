@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.studyboard">
+	
+	<!-- Answer post table queries -->
+	
+	<select id="aselectbyid" parameterType="int" resultType="com.studyboard.model.APostDTO">
+		select * from aposts where pid = #{pid} order by pdate
+	</select>
+	
+	<select id="aselectall" parameterType="int" resultType="com.studyboard.model.APostDTO">
+		select * from aposts
+	</select>
+
+	<insert id="ainsert" parameterType="com.studyboard.model.APostDTO">
+		insert into aposts 
+		values(#{pid}, sysdate, #{poster}, #{pcontent})
+	</insert>
+	
+	<select id="countcom" resultType="int">
+		select count(pid) from aposts;
+	</select>	
+	
+	<delete id="adelete" parameterType="String">
+		delete from aposts where pcontent = #{pcontent}
+	</delete>
+	
+	<select id="aselectbycontent" parameterType="Date" resultType="com.studyboard.model.APostDTO">
+		select * from aposts where pdate = #{pdate}
+	</select>
+</mapper>

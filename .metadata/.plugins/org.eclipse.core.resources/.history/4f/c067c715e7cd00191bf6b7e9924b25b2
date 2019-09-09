@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.studyboard">
+	<!-- account table queries -->
+	<select id="selectall" resultType="com.studyboard.model.MemberDTO">
+		select * from ACCOUNTS
+	</select>
+
+	<select id="selectbyid" parameterType="String" resultType="com.studyboard.model.MemberDTO">
+		select * from accounts where mid = #{mid}
+	</select>
+	
+	
+	<insert id="insert" parameterType="com.studyboard.model.MemberDTO">
+		insert into accounts values(#{mid}, #{mname}, #{pw}, #{photo})
+	</insert>	
+	
+	
+	<!-- post table queries -->
+	<select id="pselectall" resultType="com.studyboard.model.PostDTO">
+		select * from POSTS
+	</select>
+	
+	<select id="selectby" parameterType="String" resultType="com.studyboard.model.PostDTO">
+		select * from accounts where mid = #{mid}
+	</select>
+	
+	
+	<insert id="pinsert" parameterType="com.studyboard.model.PostDTO">
+		insert into accounts values(#{mid}, #{mname}, #{pw}, #{photo})
+	</insert>	
+
+</mapper>

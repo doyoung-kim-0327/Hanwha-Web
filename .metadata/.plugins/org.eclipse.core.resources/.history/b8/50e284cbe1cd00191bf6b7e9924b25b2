@@ -1,0 +1,104 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Join Us</title>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+
+
+<script>
+	// 비밀번호와 비밀번호 확인이 일치하는가 확인하는 함수
+	function checkPassword(form) {
+		password1 = form.pw.value;
+		password2 = form.password_confirm.value;
+		System.out.println(password1);
+		System.out.println(password2);
+		// If password not entered 
+		if (password1 == "") {
+			alert("Please enter Password");
+			return false;
+		}
+		// If confirm password not entered 
+		else if (password2 == "") {
+			alert("Please enter confirm password");
+			return false;
+		}
+		// If Not same return False.     
+		else if (!password1.equals(password2)) {
+			alert("\nPassword did not match: Please try again...")
+			return false;
+		}
+
+		// If same return True. 
+		else {
+			alert("Password Match: Welcome to GeeksforGeeks!")
+			return true;
+		}
+	}
+</script>
+
+</head>
+
+<body>
+
+<form onSubmit = "return checkPassword(this)" class="form-horizontal" action="join" method="POST">
+  <fieldset>
+    <div id="legend">
+      <legend class="">Register</legend>
+    </div>
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="username">ID</label>
+      <div class="controls">
+        <input type="text" id="mid" name="mid" placeholder="" class="input-xlarge">
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="email">Nickname</label>
+      <div class="controls">
+        <input type="text" id="mname" name="mname" placeholder="" class="input-xlarge">
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- Password-->
+      <label class="control-label" for="password">Password</label>
+      <div class="controls">
+        <input type="password" id="pw" name="pw" placeholder="" class="input-xlarge">
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- Password -->
+      <label class="control-label"  for="password_confirm">Password (Confirm)</label>
+      <div class="controls">
+        <input type="password" id="password_confirm" placeholder="" class="input-xlarge">
+      </div>
+    </div>
+ 
+ 	<div class="control-group">
+      <!-- Photo -->
+      <label class="control-label"  for="photo">Photo</label>
+      <div class="controls">
+        <input type="file" id="photo" name="photo" placeholder="" class="input-xlarge">
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- Button -->
+      <div class="controls">
+        <button class="btn btn-success">Register</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+
+</body>
+</html>

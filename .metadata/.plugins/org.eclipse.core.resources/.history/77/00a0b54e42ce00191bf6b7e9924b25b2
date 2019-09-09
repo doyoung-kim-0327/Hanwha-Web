@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.studyboard">
+	
+	<!-- post table queries -->
+	
+	<select id="selectallposter" resultType="com.studyboard.model.PostDTO">
+		select * from posts
+	</select>
+	
+	
+	<select id="selectallbyposter" parameterType="String" resultType="com.studyboard.model.PostDTO">
+		select * from posts where poster = #{poster} order by pdate
+	</select>
+	
+	
+	<select id="selectbypid" parameterType="int" resultType="com.studyboard.model.PostDTO">
+		select * from posts where pid = #{pid}
+	</select>
+	
+	
+	<insert id="pinsert" parameterType="com.studyboard.model.PostDTO">
+		insert into posts 
+		values(100, #{ptitle}, sysdate, #{poster}, #{pcontent}, #{attach})
+	</insert>	
+	
+	<delete id="pedit" parameterType="int">
+		update posts 
+		set ptitle=#{ptitle}, 
+			pdate=#{pdate}, pcontent=#{pcontent}, 
+			attach=#{attach}
+		where pid=#{pid}
+	</delete>
+	
+	<delete id="pdelete" parameterType="int">
+		delete from posts where pid = #{pid}
+	</delete>
+	
+
+</mapper>

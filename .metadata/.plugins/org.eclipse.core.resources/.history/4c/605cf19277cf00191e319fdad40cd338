@@ -1,0 +1,96 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My page - posts</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Resume - Start Bootstrap Theme</title>
+
+<!-- Bootstrap core CSS -->
+<link href="resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom fonts for this template -->
+<link
+	href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i"
+	rel="stylesheet">
+<link href="resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="resources/css/resume.min.css" rel="stylesheet">
+
+<style type="text/css">
+.head-div {
+	padding-top: 70px;
+	padding-bottom: 10px;
+}
+
+.word-box {
+	width: 80% !important;
+}
+
+.pcontent {
+	word-break:break-all;
+	color: #343A40;
+}
+
+.text-box {
+	padding-bottom: 200px;
+}
+
+.edit-btn{
+	float: right;
+}
+</style>
+
+</head>
+<body>
+  <%@include file="navbar.jsp" %>
+
+	<div class="container-fluid p-0">
+
+
+		<hr class="m-0">
+
+		<section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="experience">
+			<div class="word-box">
+				<div class="head-div">
+					<h4>게시글</h4>
+					<h2 style="padding-bottom: 30px;">${post.ptitle }</h2>
+					<div class="subheading mb-3" style="float:right;">Last Update: ${post.pdate }</div>
+				</div>
+				
+				<hr class="m-2">
+				
+				<div class="text-box resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+					<div class="resume-content">
+						
+						<p class="pcontent">${post.pcontent }</p>
+					</div>
+					
+				</div>
+				
+				<div class="edit-btn">
+					<a href="editpost?pid=${post.pid}" class="btn btn-info" role="button">수정</a>
+					<a href="mypage" class="btn btn-info" role="button">목록</a>
+				</div>
+
+			</div>
+		</section>
+
+	</div>
+	<hr class="m-0">
+
+
+</body>
+</html>

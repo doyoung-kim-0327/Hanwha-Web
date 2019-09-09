@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+<context:annotation-config/>
+<context:component-scan base-package="lab4"/>
+<!-- <bean id="car" class="lab4.Car" p:model="소나타"/>
+<bean id="people" class="lab4.People"/>
+<bean id="license1" class="lab4.License" p:title="ocp" p:year="2019"/>
+<bean id="license2" class="lab4.License" p:title="ocp2" p:year="2020"/> -->
+
+
+</beans>

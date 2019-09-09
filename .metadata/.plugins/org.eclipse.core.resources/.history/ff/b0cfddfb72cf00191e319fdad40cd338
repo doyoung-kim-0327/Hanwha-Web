@@ -1,0 +1,11 @@
+ClassicEditor 
+
+    .create( document.querySelector( '#pcontent' ) ) 
+
+    .then( editor => { 
+
+        console.log( editor ); 
+
+    } ) 
+
+

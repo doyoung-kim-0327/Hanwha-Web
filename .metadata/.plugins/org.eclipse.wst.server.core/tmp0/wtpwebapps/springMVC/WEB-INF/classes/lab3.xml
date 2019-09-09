@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--생성자를 통해 주입하기-->
+<!-- 	<bean id="car" class="lab3.Car">
+		<constructor-arg name="model" value="BMW520"/>
+		<constructor-arg name="price" value="6000"/>
+	</bean> -->
+
+<!--Setter통해 주입하기-->		
+	<bean id="car" class="lab3.Car">
+		<property name="model" value="그랜져"></property>
+		<property name="price" value="4000"></property>
+	</bean>
+	
+<!--생성자를 통해 주입하기-->
+<!-- 	<bean id="people" class="lab3.People">
+		<constructor-arg name="name" value="도영"/>
+		<constructor-arg name="phone" value="010-0000-0000"/>
+		<constructor-arg ref="car"/>
+	</bean> -->
+
+<!--Setter통해 주입하기-->		
+<!-- 	<bean id="people" class="lab3.People">
+		<property name="name" value="도영"></property>
+		<property name="phone" value="010-8010-0000"></property>
+		<property name="car" ref="car"></property>
+	</bean> -->
+
+<bean id="license1" class="lab3.License" p:title="ocp" p:year="2019"/>
+<bean id="license2" class="lab3.License" p:title="sqld" p:year="2020"/>
+
+
+<!--p tag통해 주입하기 -->
+	<bean id="people" class="lab3.People" p:name="도영쓰" p:phone="010-1111-1111" autowire="byType" scope="prototype">	<!-- autowire="byName"이랑 p:car-ref="car"라고 준거랑 같음 -->
+		<property name="major">
+			<list>
+				<value>컴퓨터공학과</value>
+				<value>중어중문학과</value>
+			</list>
+		</property>
+<!-- 		<property name="licenses">
+			<list>
+				<ref bean="license1"/>
+				<ref bean="license2"/>
+			</list>
+		</property> -->
+	</bean>
+		
+
+</beans>

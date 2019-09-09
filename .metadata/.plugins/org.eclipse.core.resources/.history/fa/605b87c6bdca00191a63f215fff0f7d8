@@ -1,0 +1,5 @@
+package com.hanwha.model;
+
+public class DeptDAO_Mybatis {
+
+}

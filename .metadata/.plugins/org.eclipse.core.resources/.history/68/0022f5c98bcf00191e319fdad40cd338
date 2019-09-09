@@ -1,0 +1,157 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Join Us</title>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+
+
+<script>
+
+	// 비밀번호와 비밀번호 확인이 일치하는가 확인하는 함수
+	function checkPassword(form) {
+		alert("in!");
+		password1 = form.pw.value;
+		password2 = form.password_confirm.value;
+
+		// If password not entered 
+		if (password1 == "") {
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}
+		// If confirm password not entered 
+		else if (password2 == "") {
+			alert("비밀번호를 다시 한번 입력해주세요.");
+			return false;
+		}
+		// If Not same return False.     
+		else if (password1 != password2) {
+			alert("\n비밀번호를 다시 확인해주세요!\n비밀번호와 비밀번호 확인 내용은 같아야합니다.")
+			return false;
+		}
+
+		// If same return True. 
+		else {
+			alert("회원가입 되셨습니다!")
+			return true;
+		}
+	}
+</script>
+
+<style type="text/css">
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */                          
+}
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<form onsubmit = "return checkPassword(this)" class="form-horizontal" action="join" method="POST">
+  <fieldset>
+    <div id="legend">
+      <legend class="">Register</legend>
+    </div>
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="username">ID</label>
+      <div class="controls">
+        <input type="text" id="mid" name="mid" placeholder="" class="input-xlarge">
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="email">Nickname</label>
+      <div class="controls">
+        <input type="text" id="mname" name="mname" placeholder="" class="input-xlarge">
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- Password-->
+      <label class="control-label" for="password">Password</label>
+      <div class="controls">
+        <input type="password" id="pw" name="pw" placeholder="" class="input-xlarge">
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- Password -->
+      <label class="control-label"  for="password_confirm">Password (Confirm)</label>
+      <div class="controls">
+        <input type="password" id="password_confirm" placeholder="" class="input-xlarge">
+      </div>
+    </div>
+ 
+ 	<div class="control-group">
+      <!-- Photo -->
+      <label class="control-label"  for="photo">Photo</label>
+      <div class="controls">
+        <input type="file" id="photo" name="photo" placeholder="" class="input-xlarge">
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- Button -->
+      <div class="controls">
+        <button class="btn btn-success">Register</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+
+	<!-- Trigger/Open The Modal -->
+	<button id="myBtn">Open Modal</button>
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<p>Some text in the Modal..</p>
+	</div>
+
+	</div>
+
+
+</body>
+</html>

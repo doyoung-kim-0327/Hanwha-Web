@@ -1,0 +1,5 @@
+package com.studyboard.model;
+
+public class QPostDTO {
+
+}

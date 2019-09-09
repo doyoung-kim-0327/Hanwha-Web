@@ -1,0 +1,10 @@
+package com.studyboard.model;
+
+public class MemberDTO {
+	String mid;
+	String mname;
+	String pw;
+	
+	
+	
+}

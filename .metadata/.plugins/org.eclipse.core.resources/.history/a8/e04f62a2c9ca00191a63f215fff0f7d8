@@ -1,0 +1,51 @@
+package com.hanwha.model;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class EmpDAO_Mybatis {
+	
+	@Autowired
+	SqlSession session;
+	
+	public List<String> selectAllJob() {
+		return session.selectList("com.hanwha.emp.selectalljob");
+	}
+	
+	public List<Integer> selectAllManager() {
+		return session.selectList("com.hanwha.emp.selectallmanager");
+	}
+	
+	/*
+	public List<EmpVO> selectByJob(String job, int sal) {
+		return session.selectOne("com.hanwha.dept.selectbyjob", deptid);
+	}
+	*/
+	
+	public List<EmpVO> selectByDept(int deptid) {
+		return session.selectOne("com.hanwha.dept.selectbydept", deptid);
+	}
+	
+	public List<EmpVO> selectAll() {
+		return session.selectList("com.hanwha.emp.selectall");
+	}
+	
+	public EmpVO selectById(int empid) {
+		return session.selectOne("com.hanwha.emp.selectbyid", empid);
+	}
+	public int insertEmp(EmpVO emp) {
+		return session.insert("com.hanwha.emp.insert", emp);
+	}
+	
+	public int updateEmp(EmpVO emp) {
+		return session.update("com.hanwha.emp.update", emp);
+	}
+	
+	public int deleteEmp(int empid) {
+		return session.delete("com.hanwha.emp.delete", empid);
+	}
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanwha.emp">
+	<select id="selectalljob" resultType="com.hanwha.model.EmpVO">
+		select * from jobs
+	</select>
+
+	<select id="selectallmanager" resultType="com.hanwha.model.EmpVO">
+		select distinct manager_id from employees
+	</select>
+	
+	<select id="selectbydept" parameterType="int" resultType="com.hanwha.model.EmpVO">
+		select * from employees where department_id= " + #{deptid}
+	</select>
+	
+	<select id="selectall" resultType="com.hanwha.model.EmpVO">
+		select * from employees
+	</select>
+	
+	<insert id="insert" parameterType="com.hanwha.model.DeptDTO">
+		insert into departments (department_id, department_name) values(#{department_id},#{department_name})
+	</insert>	
+	
+	<update id="update" parameterType="com.hanwha.model.DeptDTO">
+		update departments set department_name = #{department_name} where department_id = #{department_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from departments where department_id = #{department_id}
+	</delete>
+
+</mapper>

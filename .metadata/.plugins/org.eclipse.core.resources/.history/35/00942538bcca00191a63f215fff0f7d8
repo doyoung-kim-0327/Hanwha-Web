@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="lab.mapper.dept"> 
+    <!-- <select id="getUser" resultType="uservo" 
+            parameterType="string">   java.lang.String이 alias되어있음
+		select * from userinfo where userid = #{userid} 
+		
+	</select> -->
+	
+	<select id="getDeptList" resultType="model.DeptVO"  >   
+		select * from departments   
+		
+	</select>
+<!-- 	
+	<select id="login" resultType="uservo" 
+	parameterType="hashMap">
+	    select * from userinfo where userid=#{uid} and userpwd=#{upwd}
+	</select>
+	
+	
+	<insert id="insertUser" parameterType="uservo"  >
+	   insert into userinfo (userid, username, userpwd, address, 
+		  uno, email, phone)  
+		 values(#{userid},#{username},#{userpwd},#{address},
+		 userinfo_seq.NEXTVAL,#{email},#{phone})
+	</insert>
+	
+	<update id="modifyUser" parameterType="uservo">
+	         update userinfo 
+			  set username=#{username},
+			   email= #{email},
+			   phone=#{phone},
+			   address=#{address}    
+			  where userid = #{userid}
+	</update>
+    <delete id="removeUser" parameterType="string">
+       delete from userinfo where userid=#{userid}
+    </delete>
+    
+    <select id="searchUser" resultType="uservo" parameterType="hashmap">   
+		select * from userinfo where
+		<if test="userid!=null"> 
+		   userid like #{userid} 
+		</if>
+		<if test="username!=null"> 
+		   username like #{username} 
+		</if>
+		
+	</select> -->
+	
+</mapper>

@@ -1,0 +1,6 @@
+package com.studyboard.model;
+
+public class PostDAO_Mybatis {
+	int pid;
+	String titl
+}

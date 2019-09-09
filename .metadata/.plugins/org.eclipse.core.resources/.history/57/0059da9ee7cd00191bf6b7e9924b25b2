@@ -1,0 +1,23 @@
+package com.studyboard.model;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class PostDAO_Mybatis {
+	@Autowired
+	SqlSession session;
+
+	public  pselectAll() {
+		return session.selectList("com.studyboard.pselectall");
+	}
+	
+	public List<PostDTO> selectAllByPoster(String poster) {
+		return session.selectOne("com.studyboard.selectallbyposter", poster);
+	}
+	
+	public int insert(PostDTO post) {
+		return session.insert("com.studyboard.insert", post);
+	}
+}

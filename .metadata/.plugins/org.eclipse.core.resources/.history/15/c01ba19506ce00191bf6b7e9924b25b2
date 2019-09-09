@@ -1,0 +1,31 @@
+package com.studyboard.model;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+
+@Repository
+public class PostDAO_Mybatis {
+	@Autowired
+	SqlSession session;
+
+	public List<PostDTO> selectAll() {
+		return session.selectList("com.studyboard.selectallposter");
+	}
+
+	public List<PostDTO> selectAllByPoster(String poster) {
+		return session.selectList("com.studyboard.selectallbyposter", poster);
+	}
+	
+	public PostDTO selectById(int pid) {
+		return session.selectOne("com.studyboard.selectbypid", pid);
+	}
+	
+	
+	public int insert(PostDTO post) {
+		return session.insert("com.studyboard.pinsert", post);
+	}
+}

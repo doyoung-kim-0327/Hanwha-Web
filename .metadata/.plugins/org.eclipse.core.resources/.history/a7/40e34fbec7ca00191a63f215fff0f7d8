@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanwha.emp">
+	<select id="selectalljob" resultType="com.hanwha.model.EmpVO">
+		select * from jobs
+	</select>
+
+	<select id="selectallmanager" resultType="com.hanwha.model.EmpVO">
+		select distinct manager_id from employees
+	</select>
+	
+	<select id="selectbydept" parameterType="int" resultType="com.hanwha.model.EmpVO">
+		select * from employees where department_id= " + #{department_id}
+	</select>
+	
+	<select id="selectall" resultType="com.hanwha.model.EmpVO">
+		select * from employees
+	</select>
+	
+	<select id="selectbyid" parameterType="int" resultType="com.hanwha.model.EmpVO">
+		select * from employees where employee_id = " + #{employee_id}
+	</select>
+	
+	<insert id="insert" parameterType="com.hanwha.model.DeptDTO">
+		insert into employees values(#{}, #{}, #{}, #{}, #{}, #{}, #{}, #{}, #{}, #{}, #{})
+	</insert>	
+	
+	<update id="update" parameterType="com.hanwha.model.DeptDTO">
+		update employees set first_name=?, Last_name=?, email =?, Phone_number=?, Hire_date=?, Job_id=?, Salary=?, Commission_pct=?, Manager_id=?, Department_id=? where employee_id = ?
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from employees where employee_id = #{employee_id}
+	</delete>
+
+</mapper>

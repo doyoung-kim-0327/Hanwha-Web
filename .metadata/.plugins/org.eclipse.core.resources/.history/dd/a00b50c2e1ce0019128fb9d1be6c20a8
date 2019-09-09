@@ -1,0 +1,222 @@
+package com.studyboard.controller;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.studyboard.model.APostDAO_Mybatis;
+import com.studyboard.model.APostDTO;
+import com.studyboard.model.MemberDAO_Mybatis;
+import com.studyboard.model.MemberDTO;
+import com.studyboard.model.PostDAO_Mybatis;
+import com.studyboard.model.PostDTO;
+import com.studyboard.model.QPostDAO_Mybatis;
+import com.studyboard.model.QPostDTO;
+
+@Controller
+public class HomeController {
+	
+	@Autowired
+	MemberDAO_Mybatis dao;
+	
+	@Autowired
+	PostDAO_Mybatis pdao;
+	
+	@Autowired
+	QPostDAO_Mybatis qdao;
+	
+	@Autowired
+	APostDAO_Mybatis adao;
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String home(Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
+		return "login";
+	}
+	
+
+	@RequestMapping(value = "/join", method = RequestMethod.GET)
+	//로그인 페이지로 이동
+	public String join_get() {
+		
+		return "join";
+	}
+	
+	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	//회원가입 form정보를 받아서 로그인 페이지로 이동
+	public String join_post(MemberDTO mem) {
+		System.out.println("join " + mem);
+		dao.insert(mem);
+		return "login";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	//로그인 페이지로 이동
+	public String login_get() {
+		
+		return "login";
+	}
+	
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	//로그인 성공시 mypage로 이동
+	public String login_check(MemberDTO mem, HttpServletRequest request) {
+		MemberDTO tmp = dao.selectById(mem.getMid());
+		System.out.println(mem);
+		if (tmp == null) {
+			// 계정이 존재하지 않음
+			return "/";
+		} else if (!tmp.getPw().equals(mem.getPw())) {
+			// 비번이 틀림
+			return "/";
+		} else {
+			// 로그인 성공
+			HttpSession session = request.getSession();
+			session.setAttribute("mem", tmp);
+			return "redirect:mypage";
+
+		}
+		 
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:login";
+	}
+	
+	
+	@RequestMapping("/mypage")
+	public ModelAndView mypage(HttpSession session) {
+		MemberDTO tmp = (MemberDTO) session.getAttribute("mem");
+		MemberDTO mem = dao.selectById(tmp.getMid());
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("postlist", pdao.selectAllByPoster(mem.getMname()));
+		mv.setViewName("mypage");
+		return mv;
+	}
+
+	@RequestMapping(value = "/postdetail", method = RequestMethod.GET)
+	public String getPostDetail(int pid, Model model) {
+		model.addAttribute("post", pdao.selectById(pid)	);
+		return "postdetail";
+	}
+	
+
+	@RequestMapping(value = "/editpost", method = RequestMethod.GET)
+	public ModelAndView editPostGet(int pid) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("post", pdao.selectById(pid));
+		mv.setViewName("/editpost");
+		return mv;
+	}
+
+	
+	@RequestMapping(value = "/editpost", method = RequestMethod.POST)
+	public String editPostPost(PostDTO post) {
+		System.out.println(post);
+		pdao.editPost(post);
+		return "redirect:postdetail?pid=" + post.getPid();
+	}
+
+	@RequestMapping("/postdelete")
+	public String deptDelete(int pid) {
+		pdao.deletePost(pid);
+		return "redirect:mypage";
+	}
+	
+	@RequestMapping(value="/insertpost", method = RequestMethod.GET)
+	public String getinsert() {
+		return "/insertpost";
+	}
+	
+	@RequestMapping(value="/insertpost", method = RequestMethod.POST)
+	public String insertPost(PostDTO post) {
+		pdao.insertPost(post);
+		PostDTO newPost = pdao.selectByTitle(post.getPtitle());
+		return "redirect:postdetail?pid=" + newPost.getPid();
+	}
+	
+	//QnA Board
+	@RequestMapping("/qnaboard")
+	public ModelAndView qnaboard() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("postlist", qdao.qselectAll());
+		System.out.println(mv);
+		mv.setViewName("qnaboard");
+		return mv;
+	}
+	@RequestMapping(value="/insertpost2", method = RequestMethod.GET)
+	public String getinsert_qpost() {
+		return "/insertpost2";
+	}
+	
+	@RequestMapping(value="/insertpost2", method = RequestMethod.POST)
+	public String insertPost_qpost(QPostDTO qpost) {
+		qdao.insertqPost(qpost);
+		QPostDTO newPost = qdao.qselectByTitle(qpost.getPtitle());
+		return "redirect:postdetail2?pid=" + newPost.getPid();
+	}
+	
+
+	@RequestMapping(value = "/postdetail2", method = RequestMethod.GET)
+	public String getPostDetail2(int pid, Model model, HttpSession session) {
+		QPostDTO qvo = qdao.qselectById(pid);
+		MemberDTO tmp = (MemberDTO) session.getAttribute("mem");
+		model.addAttribute("post", qdao.qselectById(pid));
+		model.addAttribute("comments", adao.aselectById(pid));
+		System.out.println(qvo);
+		System.out.println(tmp);
+		if(!qvo.getPoster().equals(tmp.getMname())) {
+			qdao.updateHit(pid);
+		}
+		return "/postdetail2";
+	}
+	
+	@RequestMapping(value = "/postdetail2", method = RequestMethod.POST)
+	public String getPostDetail2post(APostDTO apost) {
+		adao.insertaPost(apost);
+		qdao.updateCom(apost.getPid());
+		return "redirect:postdetail2?pid="+apost.getPid();
+	}
+	
+	@RequestMapping("/postdelete2")
+	public String deptDelete2(int pid) {
+		qdao.qdeletePost(pid);
+		return "redirect:qnaboard";
+	}
+	
+	@RequestMapping("/postdelete3")
+	public String deptDelete3(String pcontent) {
+		qdao.decreasecom(qvo.getPid());
+		adao.adeletePost(pcontent);
+		QPostDTO qvo = qdao.qselectByContent(pcontent);
+		
+		return "redirect:qnaboard";
+	}
+	
+
+	
+}

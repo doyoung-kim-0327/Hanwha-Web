@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanwha.dept">
+	<select id="selectall" resultType="com.hanwha.model.DeptDTO">
+		select * from departments
+	</select>
+
+	<select id="selectbyid" parameterType="int" resultType="com.hanwha.model.DeptDTO">
+		select * from departments where department_id = #{deptid}
+	</select>
+	
+	
+	<insert id="insert" parameterType="com.hanwha.model.DeptDTO">
+		insert into departments (department_id, department_name, fileName) values(#{department_id},#{department_name}, #{fileName})
+	</insert>	
+	
+	<update id="update" parameterType="com.hanwha.model.DeptDTO">
+		update departments set department_name = #{department_name} where department_id = #{department_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from departments where department_id = #{department_id}
+	</delete>
+
+</mapper>

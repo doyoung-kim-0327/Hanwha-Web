@@ -1,0 +1,14 @@
+ClassicEditor 
+    .create( document.querySelector( '#pcontent' ) ) 
+    .then( editor => { 
+        console.log( editor ); 
+    } ) 
+    .catch( error => { 
+        console.error( error ); 
+    } );
+
+CKEDITOR.replace('#pcontent', {
+	height:'1000px',
+	startupFocus: false
+	
+});

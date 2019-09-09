@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.studyboard">
+	
+	<!-- Question post table queries -->
+	
+	<select id="qselectall" resultType="com.studyboard.model.QPostDTO">
+		select * from APOSTS
+	</select>
+	
+	
+	<select id="qselectbytitle" parameterType="String" resultType="com.studyboard.model.QPostDTO">
+		select * from qposts where ptitle = #{ptitle}
+	</select>
+	
+	<select id="selectbyqid" parameterType="int" resultType="com.studyboard.model.QPostDTO">
+		select * from qposts where pid = #{pid}
+	</select>
+	
+	<insert id="qinsert" parameterType="com.studyboard.model.QPostDTO">
+		insert into qposts 
+		values(SEQ_POSTS.NEXTVAL, #{ptitle}, sysdate, #{poster}, #{pcontent}, #{attach}, 0)
+	</insert>	
+	
+
+</mapper>

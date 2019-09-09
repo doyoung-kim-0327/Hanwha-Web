@@ -1,0 +1,12 @@
+package com.studyboard.model;
+
+import java.sql.Date;
+
+public class PostDAO_Mybatis {
+	int pid;
+	String ptitle;
+	Date pdate;
+	String poster;
+	String pcontent;
+	String attach;
+}

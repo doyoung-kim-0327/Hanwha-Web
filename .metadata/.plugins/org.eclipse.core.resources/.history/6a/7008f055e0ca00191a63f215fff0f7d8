@@ -1,0 +1,120 @@
+package com.hanwha.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.hanwha.model.DeptDAO;
+import com.hanwha.model.DeptDAO_Mybatis;
+import com.hanwha.model.DeptDTO;
+import com.hanwha.model.EmpService;
+import com.hanwha.model.EmpVO;
+
+//<bean id="myController" class=""/>
+@Controller
+public class MyController {
+	
+	@Autowired
+	DeptDAO_Mybatis dao;
+	//DeptDAO dao;
+	
+	
+	@Autowired
+	EmpService service;
+	
+	//emp
+	@RequestMapping("/emp/emplist")
+	public ModelAndView selectAll() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("emplist", service.selectAll());
+		mv.setViewName("emp/empAll");
+		return mv;
+	}
+	
+	
+	
+	@RequestMapping(value = "/emp/empdetail", method=RequestMethod.GET)
+	public ModelAndView empDetailGet(int empid) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("emp", service.selectById(empid));
+		mv.addObject("deptlist", dao.selectAll());
+		mv.addObject("joblist", service.selectAllJob());
+		mv.addObject("managerlist", service.selectAllManager());
+		mv.setViewName("emp/empdetail");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/emp/empdetail", method=RequestMethod.POST)
+	public String empUpdate(EmpVO emp) {
+		service.updateEmp(emp);
+		return "redirect:emplist";
+	}
+	
+	@RequestMapping(value = "/emp/empinsert", method=RequestMethod.GET)
+	public ModelAndView empInsertGet() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("deptlist", dao.selectAll());
+		mv.addObject("joblist", service.selectAllJob());
+		mv.addObject("managerlist", service.selectAllManager());
+		mv.setViewName("emp/empinsert");
+		return mv;
+	}
+	
+	
+	@RequestMapping(value="/emp/empinsert", method=RequestMethod.POST)
+	public String empInsertPost(EmpVO emp) {
+		service.insertEmp(emp);
+		return "redirect:emplist";
+	}
+	
+	@RequestMapping("/emp/empdelete")
+	public String empDelete(int empid) {
+		service.deleteEmp(empid);
+		return "redirect:/emp/emplist";
+	}
+	
+
+	//dept
+	
+	@RequestMapping("/dept/deptlist2")
+	public String deptlist3(Model model) {
+		model.addAttribute("deptlist", dao.selectAll());
+		return "dept/deptlist";
+	}
+	
+	
+	@RequestMapping(value = "/dept/deptdetail", method=RequestMethod.GET)
+	public String deptDetailGet(int deptid, Model model) {
+		model.addAttribute("dept", dao.selectById(deptid));
+		return "dept/deptdetail";
+	}
+
+	@RequestMapping(value="/dept/deptdetail", method=RequestMethod.POST)
+	public String deptDetailPost(DeptDTO dept) {
+		dao.updateDept(dept);
+		return "redirect:/dept/deptlist2";
+	}
+	
+	@RequestMapping(value = "/dept/deptinsert", method=RequestMethod.GET)
+	public String deptInsertGet() {
+		return "dept/deptinsert";
+	}
+	
+	@RequestMapping(value="/dept/deptinsert", method=RequestMethod.POST)
+	public String deptInsertPost(DeptDTO dept) {
+		dao.insertDept(dept);
+		return "redirect:/dept/deptlist2";
+	}
+	
+	
+	@RequestMapping("/dept/deptdelete")
+	public String deptDelete(int deptid) {
+		dao.deleteDept(deptid);
+		return "redirect:/dept/deptlist2";
+	}
+
+
+}
